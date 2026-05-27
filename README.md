@@ -2,7 +2,7 @@
 
 ## What is it?
 
-It is a voxel "engine" I made for fun written in Rust, Metal and Vulkan.
+It is a voxel engine I made for fun written in Rust, Metal and Vulkan.
 
 It is currently available only on macOS
 
