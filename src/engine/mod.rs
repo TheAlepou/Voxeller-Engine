@@ -232,7 +232,7 @@ impl Engine {
 
         // ── Swapchain ─────────────────────────────────────────────────────────
         let (swapchain, swapchain_format, swapchain_extent, swapchain_images) =
-            create_swapchain(&swapchain_ext, &surface_ext, surface, phys, &window)?;
+            create_swapchain(&swapchain_ext, &surface_ext, surface, phys, &window, vk::SwapchainKHR::null())?;
 
         let swapchain_image_views: Vec<_> = swapchain_images
             .iter()
@@ -501,14 +501,19 @@ impl Engine {
             return Ok(());
         }
 
-        // ── Destroy old swapchain ─────────────────────────────────────────────
+        // ── Destroy old image views ───────────────────────────────────────────
+        // The old swapchain itself is handed to `create_swapchain` as
+        // `old_swapchain` and destroyed only after the new one succeeds — on
+        // Windows you cannot have two live swapchains on the same surface
+        // (VK_ERROR_NATIVE_WINDOW_IN_USE_KHR).
         for &v in &self.swapchain_image_views {
             self.device.destroy_image_view(v, None);
         }
+        self.swapchain_image_views.clear();
         let old_sc = self.swapchain;
 
         let (new_sc, new_fmt, new_extent, new_images) =
-            create_swapchain(&self.swapchain_ext, &self.surface_ext, self.surface, self.phys, &self.window)?;
+            create_swapchain(&self.swapchain_ext, &self.surface_ext, self.surface, self.phys, &self.window, old_sc)?;
 
         self.swapchain_ext.destroy_swapchain(old_sc, None);
 
@@ -874,6 +879,7 @@ unsafe fn create_swapchain(
     surface:       vk::SurfaceKHR,
     phys:          vk::PhysicalDevice,
     window:        &Window,
+    old_swapchain: vk::SwapchainKHR,
 ) -> Result<(vk::SwapchainKHR, vk::Format, vk::Extent2D, Vec<vk::Image>)> {
     let caps         = surface_ext.get_physical_device_surface_capabilities(phys, surface)?;
     let formats      = surface_ext.get_physical_device_surface_formats(phys, surface)?;
@@ -927,7 +933,8 @@ unsafe fn create_swapchain(
             .pre_transform(caps.current_transform)
             .composite_alpha(vk::CompositeAlphaFlagsKHR::OPAQUE)
             .present_mode(present_mode)
-            .clipped(true),
+            .clipped(true)
+            .old_swapchain(old_swapchain),
         None,
     )?;
 
