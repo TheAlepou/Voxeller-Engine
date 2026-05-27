@@ -11,11 +11,12 @@ fn main() {
     let spv_dir    = format!("{out_root}/shaders");
     fs::create_dir_all(&spv_dir).unwrap();
 
+    // Triangle-mesh pipeline: raygen + miss + closest_hit only.
+    // The old AABB intersection.rint is no longer needed.
     let shaders = [
-        ("raygen.rgen.glsl",       "raygen.rgen.spv"),
-        ("miss.rmiss.glsl",        "miss.rmiss.spv"),
-        ("closest_hit.rchit.glsl", "closest_hit.rchit.spv"),
-        ("intersection.rint.glsl", "intersection.rint.spv"),
+        ("raygen.rgen",       "raygen.rgen.spv"),
+        ("miss.rmiss",        "miss.rmiss.spv"),
+        ("closest_hit.rchit", "closest_hit.rchit.spv"),
     ];
 
     let glslc_ok = Command::new("glslc").arg("--version").output().is_ok();
