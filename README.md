@@ -8,11 +8,18 @@ It is currently available only on macOS
 
 ![Image Alt](https://github.com/TheAlepou/Voxeller-Engine/blob/main/screenshots/v0.0.1-alpha_test.png)
 
-## How do I build it?
+## How do I build it (macOS)?
 
 1. Install Command Line Tools for Xcode
 2. Install Rust-lang
 3. Run it like any other Rust program via the cargo run command.
+
+## How do I build it (Windows)?
+
+1. Install Rust-lang
+2. Install Vulkan-SDK
+3. run it via cargo run
+![Image Alt](https://github.com/TheAlepou/Voxeller-Engine/blob/main/screenshots/v0.0.1-alpha_test_Windows.png)
 
 ## How do I use it?
 
@@ -36,5 +43,11 @@ Escape	Release cursor
 
 Press F then P then S for the FPS counter and developer data
 
+## Windows Controls
 
+W / A / S / D -- Fly
+Shift -- speed up
+Left Click (hold) -- move camera
+Space / CTRL -- move up down
 
+The F - P - S feature doesn't work on Windows as of now.
