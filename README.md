@@ -6,7 +6,7 @@ It is a voxel "engine" I made for fun written in Rust, Metal and Vulkan.
 
 It is currently available only on macOS
 
-![Image Alt](https://github.com/TheAlepou/Voxeller-Engine/screenshots/v0.0.1-alpha_test.png)
+![Image Alt](https://github.com/TheAlepou/Voxeller-Engine/blob/main/screenshots/v0.0.1-alpha_test.png)
 
 ## How do I build it?
 
