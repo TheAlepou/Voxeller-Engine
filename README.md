@@ -16,7 +16,7 @@ It is currently available only on macOS
 
 ## How do I use it?
 
-There will be a macOS executable eventually.
+Check the releases page and download it from there.
 
 ### Engine Controls:
 
